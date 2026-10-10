@@ -145,6 +145,5 @@ sudo hostnamectl set-hostname control-plane   # on control plane
 sudo hostnamectl set-hostname worker          # on worker
 ```
 
-**Why:** Kubernetes' Node Authorizer only trusts a kubelet whose cert CN is exactly `system:node:<nodeName>` and whose reported hostname matches `<nodeName>`. This has to line up exactly or the node gets rejected later.
-
+**Why:** The Node Authorizer identifies a kubelet by its cert CN (system:node:<nodeName>) + group (system:nodes), then looks up a Node object with that exact name in its in-memory graph. The <nodeName> must match the metadata.name of the registered Node object (which is derived from the kubelet's hostname or --hostname-override).  If no matching Node object exists, the authorizer returns "no opinion" and the kubelet loses its scoped read access — its API calls will 403 via RBAC.
 Next: [`05-kubeconfigs.md`](./05-kubeconfigs.md)
