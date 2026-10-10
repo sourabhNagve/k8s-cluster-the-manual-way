@@ -1,0 +1,20 @@
+# Certificates and keys — never commit live cluster credentials
+*.pem
+*.key
+*-key.pem
+*.csr
+*.srl
+ca.srl
+
+# kubeconfigs embed certs — never commit
+*.kubeconfig
+admin.kubeconfig
+
+# encryption key / config — contains the live Secrets encryption key
+encryption-config.yaml
+
+# local scratch
+*.tar
+*.tar.gz
+*.tgz
+.DS_Store
